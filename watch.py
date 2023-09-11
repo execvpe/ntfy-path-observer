@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
 
 import os
+import requests
 import sys
 import signal
+
+from requests.auth import HTTPBasicAuth
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 
 WATCH_PATH = os.environ["WATCH_PATH"]
 
+NTFY_USER  = os.environ["NTFY_USER"]
+NTFY_PASS  = os.environ["NTFY_PASS"]
+NTFY_URL   = os.environ["NTFY_URL"]
+
 def on_created(event):
     print(f"[NEW FILE] {event.src_path}")
+    with open(event.src_path, "rb") as f:
+        requests.put(NTFY_URL,
+                     auth=HTTPBasicAuth(NTFY_USER, NTFY_PASS),
+                     data=f,
+                     headers={"Filename": os.path.basename(event.src_path)})
 
 def handler(signum, frame):
     signame = signal.Signals(signum).name

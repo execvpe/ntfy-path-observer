@@ -9,7 +9,7 @@ from requests.auth import HTTPBasicAuth
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 
-WATCH_PATH = os.environ["WATCH_PATH"]
+OBSERVER_PATH = os.environ["OBSERVER_PATH"]
 
 NTFY_USER  = os.environ["NTFY_USER"]
 NTFY_PASS  = os.environ["NTFY_PASS"]
@@ -36,7 +36,7 @@ def main(argc: int, argv: list[str]) -> None:
 
     observer = Observer()
     observer.schedule(event_handler=event_handler,
-                      path=WATCH_PATH,
+                      path=OBSERVER_PATH,
                       recursive=False)
     observer.start()
 

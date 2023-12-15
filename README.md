@@ -11,5 +11,5 @@ export NTFY_PASS='password'
 export NTFY_URL='https://ntfy.example.com/topic'
 export WATCH_PATH='/path/to/observe'
 
-./watch.py
+./observe.py
 ```
